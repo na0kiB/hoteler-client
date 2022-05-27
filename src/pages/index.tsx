@@ -16,12 +16,12 @@ const Home: NextPage<Props> = (props, { statusCode }) => {
     return <Error statusCode={statusCode} />;
   }
   return (
-    <div>
+    <div className="bg-black">
       <h2>POSTの一覧</h2>
       {props.posts.map((post, id) => (
         <>
           <li key={id}>{post.id}</li>
-          <li>{post.title}</li>
+          <li key={id}>{post.title}</li>
         </>
       ))}
     </div>
