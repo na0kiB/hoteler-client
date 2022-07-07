@@ -1,10 +1,10 @@
-import React from "react";
-
-  const handleChange = async (e) => {
+ const handleChange = async (e) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/presigned-url`)
     const S3DirectPost = await res.json()
   
     const file = e.target.files[0]
+    console.log(file)
+
     const fields = S3DirectPost.fields
     const formData = new FormData()
     for (const key in fields) {
@@ -25,3 +25,5 @@ import React from "react";
   const parseXML = (text: string) => new DOMParser().parseFromString(text, 'application/xml')
 
   export default handleChange
+
+  
