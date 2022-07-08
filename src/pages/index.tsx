@@ -1,6 +1,7 @@
 import React from "react";
 import Error from "next/error";
 import type { GetServerSideProps, NextPage } from "next";
+import onUploadImage from "";
 
 type Post = {
   id: number;
@@ -11,32 +12,41 @@ type Props = {
   posts: Post[];
 };
 
-const handleChange = async (e: any) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/presigned-url`)
-  const S3DirectPost = await res.json()
+// const onUploadImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
+//   const res = await fetch(
+//     `${process.env.NEXT_PUBLIC_API_URL}/v1/presigned-url`
+//   );
+//   const S3DirectPost = await res.json();
+//   if (!event.target.files) return;
+//   const file = event.target.files[0];
 
-  const file = e.target.files[0]
-  console.log(file)
+//   const fields = S3DirectPost.fields;
+//   const formData = new FormData();
+//   for (const key in fields) {
+//     formData.append(key, fields[key]);
+//   }
+//   formData.append("file", file);
 
-  const fields = S3DirectPost.fields
-  const formData = new FormData()
-  for (const key in fields) {
-    formData.append(key, fields[key])
-  }
-  formData.append('file', file)
+//   const ret = await fetch(S3DirectPost.url, {
+//     method: "POST",
+//     headers: {
+//       Accept: "multipart/form-data",
+//     },
+//     body: formData,
+//   });
+//   console.log(S3DirectPost.url);
+//   // https://hoteler-image.s3.ap-northeast-1.amazonaws.com
+//   const resText = await ret.text();
+//   console.log(resText);
+//   const resXML = await parseXML(resText);
+//   console.log(resXML);
+//   const key = await resXML.getElementsByTagName("Key")[0].childNodes[0]
+//     .nodeValue;
+//   console.log(key);
+// };
 
-  const ret = await fetch(S3DirectPost.url, {
-    method: 'POST',
-    headers: { Accept: 'multipart/form-data' },
-    body: formData,
-  })
-  const resText = await ret.text()
-  const resXML = await parseXML(resText)
-  const key = await resXML.getElementsByTagName('Key')[0].childNodes[0].nodeValue
-}
-
-const parseXML = (text: string) => new DOMParser().parseFromString(text, 'application/xml')
-
+// const parseXML = (text: string) =>
+//   new DOMParser().parseFromString(text, "application/xml");
 
 const Home: NextPage<Props> = (props, { statusCode }) => {
   if (statusCode) {
@@ -44,18 +54,18 @@ const Home: NextPage<Props> = (props, { statusCode }) => {
   }
   return (
     <>
-    <div className="bg-black">
-      <h2>POSTの一覧</h2>
-      {props.posts.map((post, id) => (
-        <>
-          <li key={id}>{post.id}</li>
-          <li key={id}>{post.title}</li>
-        </>
-      ))}
-    </div>
-    <div>
-      <input type="file" onChange={handleChange} />
-    </div>
+      <div className="bg-black">
+        <h2>POSTの一覧</h2>
+        {props.posts.map((post, index) => (
+          <div key={index}>
+            <li>{post.id}</li>
+            <li>{post.title}</li>
+          </div>
+        ))}
+      </div>
+      <div>
+        <input type="file" onChange={onUploadImage} />
+      </div>
     </>
   );
 };
