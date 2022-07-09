@@ -2,7 +2,7 @@ import React from "react";
 import Error from "next/error";
 import type { GetServerSideProps, NextPage } from "next";
 
-import onUploadImage from "components/s3ByForm";
+import OnUploadImage from "components/s3ByForm";
 
 type Post = {
   id: number;
@@ -29,7 +29,7 @@ const Home: NextPage<Props> = (props, { statusCode }) => {
         ))}
       </div>
       <div>
-        <input type="file" onChange={onUploadImage} />
+        <OnUploadImage />
       </div>
     </>
   );
