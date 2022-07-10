@@ -14,7 +14,7 @@ export const getEachHotel = (id: number) => {
 
 // ホテルを新規作成
 export const createHotel = (params: string) => {
-  return client.post('/hotels/posts', params, {
+  return client.post('/hotels', params, {
     headers: {
       "access-token": Cookies.get("_access_token"),
       "client": Cookies.get("_client"),
@@ -37,6 +37,17 @@ export const updateHotel = (id: number, params: string) => {
 // ホテルを削除
 export const deleteHotel = (id: number) => {
   return client.delete(`/hotel/${id}`, {
+    headers: {
+      "access-token": Cookies.get("_access_token"),
+      "client": Cookies.get("_client"),
+      "uid": Cookies.get("_uid")
+    },
+  });
+};
+
+// S3のKeyをDBに送信
+export const postImageKeyOfHotel = (params: string) => {
+  return client.post('/hotels', params, {
     headers: {
       "access-token": Cookies.get("_access_token"),
       "client": Cookies.get("_client"),

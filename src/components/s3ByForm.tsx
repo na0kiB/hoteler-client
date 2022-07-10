@@ -1,3 +1,4 @@
+import { postImageKeyOfHotel } from "lib/post";
 import React, { useState } from "react";
 
 const OnUploadImage: React.FC<any> = ({ locationOfImage }) => {
@@ -41,7 +42,9 @@ const OnUploadImage: React.FC<any> = ({ locationOfImage }) => {
 
     const key = await resXML.getElementsByTagName("Key")[0].childNodes[0]
       .nodeValue;
+    if (!key) return;
     console.log(key);
+    postImageKeyOfHotel(key);
   };
 
   return (
