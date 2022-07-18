@@ -1,6 +1,5 @@
 import Cookies from 'js-cookie';
 import client from './client';
-import { POST } from '../types/types';
 
 // ホテル一覧
 export const getAllHotels = () => {
@@ -47,7 +46,7 @@ export const deleteHotel = (id: number) => {
 
 // S3のKeyをDBに送信
 export const postImageKeyOfHotel = (params: string) => {
-  return client.post('/hotels', params, {
+  return client.post('/images/hotel', params, {
     headers: {
       "access-token": Cookies.get("_access_token"),
       "client": Cookies.get("_client"),

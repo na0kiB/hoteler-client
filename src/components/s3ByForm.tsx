@@ -4,9 +4,7 @@ import React, { useState } from "react";
 const OnUploadImage: React.FC<any> = ({ locationOfImage }) => {
   const [imageUrl, setImageUrl] = useState("");
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/v1/presigned-url`
-    );
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/images`);
     const S3DirectPost = await res.json();
     if (!event.target.files) return;
     const file: File = event.target.files[0];
@@ -43,8 +41,14 @@ const OnUploadImage: React.FC<any> = ({ locationOfImage }) => {
     const key = await resXML.getElementsByTagName("Key")[0].childNodes[0]
       .nodeValue;
     if (!key) return;
-    console.log(key);
-    postImageKeyOfHotel(key);
+    const hotelKey: any = {
+      user_id: 1,
+      image: {
+        hotel_s3_key: key,
+      },
+    };
+    console.log(hotelKey);
+    postImageKeyOfHotel(hotelKey);
   };
 
   return (
